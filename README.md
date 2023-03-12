@@ -24,7 +24,7 @@ You will also need a VNC client on another machine from which to send inputs. Pr
 sudo apt install xvfb x11vnc
 ```
 
-### install `python-xlib`, `pythin-uinput`
+### install `python-xlib`, `python-uinput`
 
 1. Clone the repo
 2. Install the package
@@ -53,3 +53,15 @@ Xvfb $DISPLAY & x11vnc -forever -nopw & sudo python xevpy.py
 ```
 
 You can then connect to your USB4VC with a VNC viewer. Any input events sent from your VNC client should print to the terminal. Mouse events should be sent through to the USB4VC protocol card and any client retro machines. You can open the "Show input events" screen on the USB4VC and watch for `python-uinput` events. 
+
+## Notes
+
+I don't think it's super intuitive to use a blank VNC window to send inputs. Barrier on the other hand would provide more intuitive screen-edge device focus, which would make the retro machines feel like any other modern Barrier client, with the USB4VC just doing the translation. This code should work just as well with Barrier as with VNC, as it listens to any Xinput events on the root window. 
+
+I could get Barrier to work for sending kepresses and mouse button presses, but not mouse movements. Once Barrier on the USB4VC captured the mouse, I got no movement events, and it was impossible to move the mouse back to any other machine connected with Barrier, short of killing the server. If someone can get Barrier to register mouse movements when using an Xvfb display, that would rock. 
+
+Latency seems OKish. I have looked into [`netevent`](https://github.com/Blub/netevent) but have not done any testing. The requirement of a Linux host kind of rules it out for me. 
+
+Maybe VNC can be skipped by using a remote X server as the DISPLAY. Again though, this makes use on Windows trickier (or at least less intuitive) so I haven't tested it yet. 
+
+I am also looking into [`evsieve`](https://github.com/KarsMulder/evsieve) as a way to remap keyboard keys on the USB4VC (in hopes of setting up WASD on certain old DOS games)
