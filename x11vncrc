@@ -1,0 +1,10 @@
+display :0
+quiet
+nevershared
+forever
+nopw
+repeat
+always_inject
+cursor arrow 
+xwarppointer
+avahi
